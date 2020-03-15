@@ -1,0 +1,4 @@
+"Rule: ocaml: ml -> cmo & cmi (%=hello )": "\196\153\r\140\149\003f\n\006\186I\245\245\175\216\198"
+"Resource: /Users/sychoo/code/cmu/ocaml/project/hello.ml": "}R\213\146\249\254|M\183\164:}N\1543\031"
+"Rule: ocaml dependencies ml (%=hello )": "\227\221+\204-\245Nk\020\162\233vBH\007C"
+"Rule: ocaml: cmo* -> byte (%=hello )": "\004\138\\\215\135\209E\180\0008\132\144\029]\218\193"
