@@ -1,3 +1,8 @@
+(** BASICS **)
+
+(* load files into ocaml program/sessions *)
+#use "hello.ml" (* loads the file hello.ml into the current program *)
+
 (* primitive ocaml types
  *   int         31-bit signed int (roughly +/- 1 billion) on 32-bit processors, or 63-bit signed int on 64-bit processors
  *   float       IEEE double-precision floating point, equivalent to C's double
@@ -38,14 +43,43 @@ let rec fib n =
   else fib (n - 1) + fib (n - 2)
 
 (* repeat *)
-let rec repeat str n: int =
+
+(* note that the 2 repeat_print functions below are equivalent *)
+let rec repeat_print s n =
+  if n != 0 then (
+    print_string s;
+    repeat_print s (n - 1)
+  )
+
+let rec repeat_print s n =
   if n != 0 then
     begin
-      print_string str
-      repeat (str, n - 1)
+      print_string s;
+      repeat_print s (n - 1)
     end
 
-(* even-odd *)
+let rec repeat s n =
+  if n = 0 then ""
+  else s ^ repeat s (n - 1)
+
+(* even-odd: define mutually recursive functions *)
+
+(* note that the two functions below are equivalent *)
+let rec even n =
+  match n with
+    | 0 -> true
+    | x -> odd (x-1)
+and odd n =
+  match n with
+    | 0 -> false
+    | x -> even (x-1)
+
+let rec even = function
+    | 0 -> true
+    | x -> odd (x-1)
+and odd = function
+    | 0 -> false
+    | x -> even (x-1)
 
 (* type inference from function definition *)
 
@@ -57,3 +91,31 @@ let avg a b =
 
 (* note that x can be of any type 'a *)
 let always_return_3 x = 3
+
+
+(** STRUCTURE OF OCAML PROGRAMS **)
+
+(* local variable *)
+
+let avg a b =
+  let sum = a +. b in
+  sum /. 2.0
+
+(* when local variable is actually useful *)
+
+(* looking for (a + b) + (a + b)^2 *)
+let f a b =
+  (a +. b) +. (a +. b) ** 2.0
+
+let f a b =
+  let x = a +. b in
+  x +. x ** 2.0
+
+(* reference *)
+let my_ref = ref 0
+let x = my_ref := 100
+let x = !my_ref (* dereference the reference *)
+
+(* continue from
+ * https://ocaml.org/learn/tutorials/structure_of_ocaml_programs.html*)
+(* nested function *)
